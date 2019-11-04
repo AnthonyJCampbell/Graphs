@@ -146,7 +146,49 @@ class Graph:
         starting_vertex to destination_vertex in
         depth-first order.
         """
-        pass  # TODO
+        # We'll need a way to keep track of what vertices we've already covered
+        # Create a Stack to hold the values coming in.
+        visited = set()
+        stack = Stack()
+        # Prev essentially becomes a library of how we got to a specific vertex
+        prev = {}
+
+        stack.push(starting_vertex)
+
+        while stack.size() > 0:
+            vertex = stack.pop()
+
+            if vertex not in visited:
+                visited.add(vertex)
+                print(f"\nvisitied is {visited}")
+                print(f"vertex is {vertex}")
+                print(f"prev is {prev}")
+
+                # If current vertex = destination, we're good. 
+                if vertex == destination_vertex:
+                    current_vertex = destination_vertex
+                    # Create a clean list to hold the route we took to get here
+                    path = []
+                    while current_vertex != starting_vertex:
+                        # We're now looking through the prev library to see how we got to the previous vertex.
+                        # So we add the vertex we currently find ourselves at to the path
+                        path.append(current_vertex)
+                        # And we set the new current_vertex to the one it took us to reach the current one.
+                        # Remember, the meaning of a KV-pair in prev is "To have gotten to {current_vertex}, we used {prev[current_vertex]}"
+                        current_vertex = prev[current_vertex]
+                    path.append(starting_vertex)
+                    path.reverse()
+                    return path
+
+                # For every possible vertex leading away from the current one
+                for next_vertex in self.vertices[vertex]:
+                    print(f"current vertex = {vertex}. Option is {next_vertex}")
+                    if not next_vertex in prev:
+                        # "To have gotten to {vertex}, we used {next_vertex}"
+                        # Key = the actual vertex. Value = How we got to that value
+                        prev[next_vertex] = vertex
+                    stack.push(next_vertex)
+
 
 
 
