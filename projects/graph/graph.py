@@ -107,16 +107,39 @@ class Graph:
         starting_vertex to destination_vertex in
         breath-first order.
         """
-        return_list = []
+        if starting_vertex == destination_vertex:
+            print(starting_vertex)
+            return
 
-        print(starting_vertex)
-        print(destination_vertex)
+        qq = Queue()
+        visited = set()
+        qq.enqueue([starting_vertex])
+
+        while qq.size() > 0:
+            # Take first element of the queue, this is a list showing how we got to this particular vertex in the queue.
+            path = qq.dequeue()
+            # Take last item of the list taken from the queue. This is the vertex we're currently at
+            vertex = path[-1]
+
+            # We're only interested in vertices we have not yet visited. So if the extracted vertex has been covered already, we're going to reloop
+            if vertex not in visited:
+                # If the last item of the list is the destination, we're good!
+                if vertex == destination_vertex:
+                    # Return the list showing the steps it took us to get here.
+                    return path
+                # Otherwise, add the vertex to visited and keep going
+                visited.add(vertex)
+
+                # For all the vertices associated with the current vertex
+                for next_vertice in self.vertices[vertex]:
+                    # Take the path we used to get to this vertex
+                    next_path = list(path)
+                    # And add the vertex assocociated with the current vertex
+                    next_path.append(next_vertice)
+                    # Store the list in the Queue and reloop
+                    qq.enqueue(next_path)
 
 
-        return return_list
-
-
-        pass  # TODO
     def dfs(self, starting_vertex, destination_vertex):
         """
         Return a list containing a path from
