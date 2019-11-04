@@ -88,26 +88,15 @@ class Graph:
 
 
         print(starting_vertex)
+        visited_set.add(starting_vertex)
 
 
         # Loop over all vertices connected to the starting vertex
-        for vertex in self.vertices:
-            # print vertex
-
-            # Redo the loop 
-
-
-
-
-
-
-
-
-
-
-            print(vertex)
-            # return self.dft_recursive(self.vertices[vertex])
-            # dft_recursive(vertex)
+        for vertex in self.vertices[starting_vertex]:
+            # If any of the vertices has already been visited and is present in visited_set, do nothing
+            if vertex not in visited_set:
+                # Otherwise, call recursive function with self.vertices[vertex]
+                self.dft_recursive(vertex, visited_set)
 
 
 
@@ -118,7 +107,13 @@ class Graph:
         starting_vertex to destination_vertex in
         breath-first order.
         """
+        return_list = []
 
+        print(starting_vertex)
+        print(destination_vertex)
+
+
+        return return_list
 
 
         pass  # TODO
@@ -168,8 +163,8 @@ if __name__ == '__main__':
         1, 2, 4, 7, 6, 3, 5
         1, 2, 4, 6, 3, 5, 7
     '''
-    # print("\nStarting DFT")
-    # graph.dft(1)
+    print("\nStarting DFT")
+    graph.dft(1)
 
     '''
     Valid BFT paths:
@@ -186,8 +181,8 @@ if __name__ == '__main__':
         1, 2, 4, 3, 7, 6, 5
         1, 2, 4, 3, 7, 5, 6
     '''
-    # print("\nStarting BFT")
-    # graph.bft(1)
+    print("\nStarting BFT")
+    graph.bft(1)
 
     '''
     Valid DFT recursive paths:
@@ -196,12 +191,14 @@ if __name__ == '__main__':
         1, 2, 4, 7, 6, 3, 5
         1, 2, 4, 6, 3, 5, 7
     '''
+    print("\nStarting DFT recursive")
     graph.dft_recursive(1)
 
     '''
     Valid BFS path:
         [1, 2, 4, 6]
     '''
+    print("\nStarting Breadth-First Search")
     print(graph.bfs(1, 6))
 
     '''
