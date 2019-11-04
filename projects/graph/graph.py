@@ -20,7 +20,7 @@ class Graph:
         if v1 in self.vertices and v2 in self.vertices:
             self.vertices[v1].add(v2)
         else:
-            raise IndexError("Cannot create edge based on given vertices!")
+            raise KeyError("Cannot create an edge based on given vertices.")
 
     def bft(self, starting_vertex):
         """
@@ -69,19 +69,58 @@ class Graph:
                 for next_vert in self.vertices[vertex]:
                     stack.push(next_vert)
 
-    def dft_recursive(self, starting_vertex):
+        print(self.vertices)
+
+    def dft_recursive(self, starting_vertex, visited_set = set()):
         """
         Print each vertex in depth-first order
         beginning from starting_vertex.
         This should be done using recursion.
         """
-        pass  # TODO
+
+        # From the starting vertex
+        # pass in each child vertex to dft_recursive
+        # if visited == None:
+        #     visited = set()
+        
+        # if starting_vertex in visited:
+        #     return
+
+
+        print(starting_vertex)
+
+
+        # Loop over all vertices connected to the starting vertex
+        for vertex in self.vertices:
+            # print vertex
+
+            # Redo the loop 
+
+
+
+
+
+
+
+
+
+
+            print(vertex)
+            # return self.dft_recursive(self.vertices[vertex])
+            # dft_recursive(vertex)
+
+
+
+
     def bfs(self, starting_vertex, destination_vertex):
         """
         Return a list containing the shortest path from
         starting_vertex to destination_vertex in
         breath-first order.
         """
+
+
+
         pass  # TODO
     def dfs(self, starting_vertex, destination_vertex):
         """
@@ -129,8 +168,8 @@ if __name__ == '__main__':
         1, 2, 4, 7, 6, 3, 5
         1, 2, 4, 6, 3, 5, 7
     '''
-    print("\nStarting DFT")
-    graph.dft(1)
+    # print("\nStarting DFT")
+    # graph.dft(1)
 
     '''
     Valid BFT paths:
@@ -147,8 +186,8 @@ if __name__ == '__main__':
         1, 2, 4, 3, 7, 6, 5
         1, 2, 4, 3, 7, 5, 6
     '''
-    print("\nStarting BFT")
-    graph.bft(1)
+    # print("\nStarting BFT")
+    # graph.bft(1)
 
     '''
     Valid DFT recursive paths:
