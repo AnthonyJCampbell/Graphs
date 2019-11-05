@@ -52,34 +52,58 @@ def earliest_ancestor(ancestors, starting_node):
     while qq.size() > 0:
         # Deque the path
         lineage = qq.dequeue()
+        # print(lineage)
+
         # Take the last ancestor/vertex of the path, since we're going to be looking for its ancestors.
+
         current_ancestor = lineage[-1]
-
         # For every ancestor, we want to check if someone has the current_ancestor as a child, thereby making them the ancestor
-        # found_any_new_ancestors = False
+        found_any_new_ancestors = False
 
-        # for ancestor in ancestors:
-            # if ancestor[1] == current_ancestor:
-                # set found_any to True
-                # next_lineage = list(lineage)
-                # next_lineage.append(ancestor[0])
-                # qq.enqueue(next_lineage)
+        for ancestor in ancestors:
+            # If anyone has the current node as a child
+            if ancestor[1] == current_ancestor:
+                # set found_any to True, so we can proceed after the loop
+                found_any_new_ancestors = True
+                next_lineage = list(lineage)
+                next_lineage.append(ancestor[0])
+                qq.enqueue(next_lineage)
+                # print(qq.queue)
 
-        # if found_any_new_ancestors == False:
-            # dead_ends.append(lineage)
-    
+        if found_any_new_ancestors == False:
+            dead_ends.append(lineage)
+            continue
+        
     # Once we've finished the loop and have gone through all possible ancestors
     # Find the longest list/lineage in our dead_ends list
+    
+    longest_length = 0
+    storage = []
 
-    # Store [-1] of each of the longest in a lit
+    for lineage in dead_ends:
+        # print(lineage)
+        # print(longest_length)
+        # print(len(lineage))
+        # if len(lineage) > longest_length, the previous strorage list has become useless so should be reinitialized
+        if len(lineage) > longest_length:
+            storage = []
+            longest_length = len(lineage)
+            storage.append(lineage[-1])
+            continue
 
+        # If length of current lineage is the same as the values that are already in the storage list, we should just add them. (Since they're both equally long)
+        elif len(lineage) == longest_length:
+            # Store [-1] of each of the longest in a list
+            storage.append(lineage[-1])
+
+    print(storage)
     # If we've found more than once, return the smallest one
-    # if len(list) > 1:
-        # lowest_ancestor = min(list)
-        # return lowest_ancestor
+    lowest_ancestor = min(storage)
+    print(lowest_ancestor)
+    return lowest_ancestor
 
 
 test_ancestors = [(1, 3), (2, 3), (3, 6), (5, 6), (5, 7), (4, 5), (4, 8), (8, 9), (11, 8), (10, 1)]
-earliest_ancestor(test_ancestors, 1)
+earliest_ancestor(test_ancestors, 9)
 
 
