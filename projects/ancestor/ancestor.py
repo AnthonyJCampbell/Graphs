@@ -12,22 +12,29 @@ def earliest_ancestor(ancestors, starting_node):
     # When all paths up have been exhausted, we'll evaluate all paths and return index[-1] of the longest one.
         # If there's > 1 tied for the longest path, return whichever one's ID is lowest.
     
-    # If starting_node has no parents, return -1
 
     # For every ancestor
         # Look for places where ancestor[1] is current ancestor
         # Then move to those places
-    print(ancestors[-1])
 
-
-
-
+    
+    # Conditional to proceed with the loop
+    found_any_ancestors = False
+    # Check if starting_node has parents
+    # If starting_node has no parents, return -1
+    for ancestor in ancestors:
+        if ancestor[1] == starting_node:
+            found_any_ancestors = True
+    
+    if found_any_ancestors is False:
+        print('here')
+        return -1
 
 
     pass
 
 test_ancestors = [(1, 3), (2, 3), (3, 6), (5, 6), (5, 7), (4, 5), (4, 8), (8, 9), (11, 8), (10, 1)]
-earliest_ancestor(test_ancestors, 2)
+earliest_ancestor(test_ancestors, 9)
 
 
 
