@@ -1,3 +1,16 @@
+class Queue():
+    def __init__(self):
+        self.queue = []
+    def enqueue(self, value):
+        self.queue.append(value)
+    def dequeue(self):
+        if self.size() > 0:
+            return self.queue.pop(0)
+        else:
+            return None
+    def size(self):
+        return len(self.queue)
+
 
 def earliest_ancestor(ancestors, starting_node):
     # Ancestors is a graph of relationships, a list of (parent, child) pairs i.e. (1, 3) -> 1 is a child of 3. i.e. [(1, 3), (2,3), (3,6), etc.]
@@ -14,39 +27,59 @@ def earliest_ancestor(ancestors, starting_node):
     
 
     # For every ancestor
-        # Look for places where ancestor[1] is current ancestor
         # Then move to those places
 
     
-    # Conditional to proceed with the loop
+    # Conditional to proceed with the rest of the functionality
     found_any_ancestors = False
     # Check if starting_node has parents
     # If starting_node has no parents, return -1
     for ancestor in ancestors:
+        # Look for ancestors who have starting_node as a child, thereby making them ancestors
         if ancestor[1] == starting_node:
             found_any_ancestors = True
     
     if found_any_ancestors is False:
-        print('here')
+        print(f"I'm afraid {starting_node} has no ancestors that we know off. Perhaps he just popped into existence?")
         return -1
 
+    qq = Queue()
+    visited = set()
+    qq.enqueue([starting_node])
+    dead_ends = []
 
-    pass
+    # We want to cover all possible permutations, so we want to keep going until the entire queueueueueueue is empty
+    while qq.size() > 0:
+        # Deque the path
+        lineage = qq.dequeue()
+        # Take the last ancestor/vertex of the path, since we're going to be looking for its ancestors.
+        current_ancestor = lineage[-1]
+
+        # For every ancestor, we want to check if someone has the current_ancestor as a child, thereby making them the ancestor
+        # found_any_new_ancestors = False
+
+        # for ancestor in ancestors:
+            # if ancestor[1] == current_ancestor:
+                # set found_any to True
+                # next_lineage = list(lineage)
+                # next_lineage.append(ancestor[0])
+                # qq.enqueue(next_lineage)
+
+        # if found_any_new_ancestors == False:
+            # dead_ends.append(lineage)
+    
+    # Once we've finished the loop and have gone through all possible ancestors
+    # Find the longest list/lineage in our dead_ends list
+
+    # Store [-1] of each of the longest in a lit
+
+    # If we've found more than once, return the smallest one
+    # if len(list) > 1:
+        # lowest_ancestor = min(list)
+        # return lowest_ancestor
+
 
 test_ancestors = [(1, 3), (2, 3), (3, 6), (5, 6), (5, 7), (4, 5), (4, 8), (8, 9), (11, 8), (10, 1)]
-earliest_ancestor(test_ancestors, 9)
+earliest_ancestor(test_ancestors, 1)
 
 
-
-class Queue():
-    def __init__(self):
-        self.queue = []
-    def enqueue(self, value):
-        self.queue.append(value)
-    def dequeue(self):
-        if self.size() > 0:
-            return self.queue.pop(0)
-        else:
-            return None
-    def size(self):
-        return len(self.queue)
