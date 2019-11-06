@@ -74,10 +74,10 @@ class SocialGraph:
         # print(possible_friendships)
 
         limited_list = possible_friendships[:numUsers]
-        print(limited_list)
+        # print(limited_list)
 
         for pair in limited_list:
-            print(pair)
+            # print(pair)
             userID = pair[0]
             friendID = pair[1]
             self.addFriendship(userID, friendID)
@@ -92,14 +92,42 @@ class SocialGraph:
         The key is the friend's ID and the value is the path.
         """
         visited = {}  # Note that this is a dictionary, not a set
-        # !!!! IMPLEMENT ME
+        visited[userID] = [userID]
+        # print(visited)
+        qq = []
+        qq.append([userID])
+        
+        print(f"Starting list of friendships is {self.friendships}")
+
+        # Take the user id and see what it's friends are
+        # While len(queueueueueue) > 0:
+        while len(qq) > 0:
+            # Dequeue item (path)
+            path = qq.pop(0)
+            # current_friend = path[-1]
+            current_friend = path[-1]
+
+            # For every friend found in self.friendships for current_friend
+            for friend in self.friendships[current_friend]:
+                # If !visited[friend]
+                if friend not in visited:
+                    print(friend)
+                    visited[friend] = path
+                    # Add it to visited with the path it took you to get there
+                    new_path = list(path)
+                    new_path.append(friend)
+                    qq.append(new_path)
+            
+
+
+
         return visited
 
 
 if __name__ == '__main__':
     sg = SocialGraph()
     sg.populateGraph(10, 2)
-    print(sg.friendships)
-    # connections = sg.getAllSocialPaths(1)
-    # print(connections)
+    # print(sg.friendships)
+    connections = sg.getAllSocialPaths(1)
+    print(connections)
     pass
