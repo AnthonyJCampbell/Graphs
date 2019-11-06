@@ -1,4 +1,4 @@
-
+import random
 
 class User:
     def __init__(self, name):
@@ -52,21 +52,36 @@ class SocialGraph:
             return 
 
         # Add users
-        # For i in numUsers
-            # Add user(i)
+        for user_id in range(numUsers):
+            self.addUser(user_id)
 
         # Create friendships
         # Create list of all possible combinations
-        # For i in range numUsers
-            # for j in range numUsers
-                # list[i] = j
-        
-        # Shuffle the list
-        # for i in range(0, len(list)):
-        # random_index = random.randint(i, len(list) - 1)
-        # list[random_index], list[i] = list[i], list[random_index]
+        possible_friendships = []
 
-        # return list[:numUsers*avgFriendships]
+        for i in range(1,numUsers+1):
+            for j in range(1,numUsers+1):
+                if j != i:
+                    possible_friendships.append([i,j])
+        
+        # print(possible_friendships)
+
+        # Shuffle the list
+        for i in range(0, len(possible_friendships)):
+            random_index = random.randint(i, len(possible_friendships) - 1)
+            possible_friendships[random_index], possible_friendships[i] = possible_friendships[i], possible_friendships[random_index]
+
+        # print(possible_friendships)
+
+        # To stick to the avg number of friendships, we're multiplying N by the avg.
+        limited_list = possible_friendships[:numUsers*avgFriendships]
+        # print(limited_list)
+
+        for pair in limited_list:
+            print(pair)
+            userID = pair[0]
+            friendID = pair[1]
+            self.addFriendship(userID, friendID)
 
     def getAllSocialPaths(self, userID):
         """
@@ -86,5 +101,6 @@ if __name__ == '__main__':
     sg = SocialGraph()
     sg.populateGraph(10, 2)
     print(sg.friendships)
-    connections = sg.getAllSocialPaths(1)
-    print(connections)
+    # connections = sg.getAllSocialPaths(1)
+    # print(connections)
+    pass
