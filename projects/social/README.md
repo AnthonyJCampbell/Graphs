@@ -47,8 +47,7 @@ Note that in this sample, Users 3, 4 and 9 are not in User 1's extended social n
 ## 3. Questions
 
 1. To create 100 users with an average of 10 friends each, how many times would you need to call `addFriendship()`? Why?
-(N_people * avg_num) / 2
-(10 * 2) / 2 = 10 unique friendships
+--- `(N_people * avg_num) / 2` is the base calculation since every friendship gets 'counted' twice in the dict. Therefore, to create 100 users with 10 friends each, we'd have to do `(100 * 10) / 2 = 500` calls to addFriendship()
 
 2. If you create 1000 users with an average of 5 random friends each, what percentage of other users will be in a particular user's extended social network? What is the average degree of separation between a user and those in his/her extended network?
 --- Approximately 4 degrees of separation. The rationale behind this is that with every degree of separation, the number of people in the network will be ~5ˆn. In this case, to reach 1,000 you'd need approximately 5ˆ4.3
