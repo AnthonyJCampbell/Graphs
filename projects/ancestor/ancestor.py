@@ -44,7 +44,6 @@ def earliest_ancestor(ancestors, starting_node):
         return -1
 
     qq = Queue()
-    visited = set()
     qq.enqueue([starting_node])
     dead_ends = []
 
@@ -96,7 +95,7 @@ def earliest_ancestor(ancestors, starting_node):
             # Store [-1] of each of the longest in a list
             storage.append(lineage[-1])
 
-    print(storage)
+    # print(storage)
     # If we've found more than once, return the smallest one
     lowest_ancestor = min(storage)
     print(lowest_ancestor)
@@ -104,6 +103,6 @@ def earliest_ancestor(ancestors, starting_node):
 
 
 test_ancestors = [(1, 3), (2, 3), (3, 6), (5, 6), (5, 7), (4, 5), (4, 8), (8, 9), (11, 8), (10, 1)]
-earliest_ancestor(test_ancestors, 9)
+earliest_ancestor(test_ancestors, 6)
 
 
