@@ -44,11 +44,29 @@ class SocialGraph:
         self.lastID = 0
         self.users = {}
         self.friendships = {}
-        # !!!! IMPLEMENT ME
+        
+        
+        # The number of users must be greater than the average number of friendships.
+        if numUsers <= avgFriendships:
+            print("Didn't you read the spec, dummy? Number of users should be greater than the average number of friendships!")
+            return 
 
         # Add users
+        # For i in numUsers
+            # Add user(i)
 
         # Create friendships
+        # Create list of all possible combinations
+        # For i in range numUsers
+            # for j in range numUsers
+                # list[i] = j
+        
+        # Shuffle the list
+        # for i in range(0, len(list)):
+        # random_index = random.randint(i, len(list) - 1)
+        # list[random_index], list[i] = list[i], list[random_index]
+
+        # return list[:numUsers*avgFriendships]
 
     def getAllSocialPaths(self, userID):
         """
