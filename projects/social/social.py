@@ -73,9 +73,8 @@ class SocialGraph:
 
         # print(possible_friendships)
 
-        # To stick to the avg number of friendships, we're multiplying N by the avg.
-        limited_list = possible_friendships[:numUsers*avgFriendships]
-        # print(limited_list)
+        limited_list = possible_friendships[:numUsers]
+        print(limited_list)
 
         for pair in limited_list:
             print(pair)
