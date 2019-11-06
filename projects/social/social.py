@@ -72,8 +72,8 @@ class SocialGraph:
             possible_friendships[random_index], possible_friendships[i] = possible_friendships[i], possible_friendships[random_index]
 
         # print(possible_friendships)
-
-        limited_list = possible_friendships[:numUsers]
+        num_friendships = int((numUsers * avgFriendships) / 2)
+        limited_list = possible_friendships[:num_friendships]
         # print(limited_list)
 
         for pair in limited_list:
@@ -83,14 +83,6 @@ class SocialGraph:
             self.addFriendship(userID, friendID)
 
     def getAllSocialPaths(self, userID):
-        """
-        Takes a user's userID as an argument
-
-        Returns a dictionary containing every user in that user's
-        extended network with the shortest friendship path between them.
-
-        The key is the friend's ID and the value is the path.
-        """
         visited = {}  # Note that this is a dictionary, not a set
         visited[userID] = [userID]
         # print(visited)
@@ -102,9 +94,7 @@ class SocialGraph:
         # Take the user id and see what it's friends are
         # While len(queueueueueue) > 0:
         while len(qq) > 0:
-            # Dequeue item (path)
             path = qq.pop(0)
-            # current_friend = path[-1]
             current_friend = path[-1]
 
             # For every friend found in self.friendships for current_friend
@@ -117,9 +107,6 @@ class SocialGraph:
                     new_path = list(path)
                     new_path.append(friend)
                     qq.append(new_path)
-            
-
-
 
         return visited
 
