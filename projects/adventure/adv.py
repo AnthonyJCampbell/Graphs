@@ -77,9 +77,25 @@ def dft(player):
             print("here")
             print(sorted_obj)
 
+            # Check every room in sorted_obj to see if we've already visited it
+                # If not, add it to stack
+
+            # Check if stack_size is larger than what it was in the beginning (stack_size_before)
+            # If the lenghts are equal, we have not pushed any rooms to the stack, so we're at a dead end. Therefore, we should start BFT
+            # If it's different, we should just reloop
+
+                # declare shortest path list
+
+                # Call BFS with current room and the last/uppermost item in the stack
+
+                 # append paths traversed with BFS to visited list
+                # except the first and the last node
+                # as they are added to the traversed path with DFT (unvisited nodes at this point)
     pass
 
-def bft():
+def bft(starting_room, target_room):
+    qq = []
+    qq.append
     pass
 
 
@@ -89,9 +105,20 @@ def bft():
 
 
 
+def enqueue(queue, data):
+    queue.insert(0, data)
+
+def dequeue(queue):
+    if len(queue)>0:
+        return queue.pop()
+    return ("Queue empty!")
 
 
-
+queueue = ["john", "marina"]
+enqueue(queueue, "Mike")
+print(queueue)
+dequeue(queueue)
+print(queueue)
 
 
 traversalPath = dft(player)
