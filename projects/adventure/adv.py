@@ -105,6 +105,41 @@ def dft(player):
 def bft(starting_room, target_room):
     qq = []
     enqueue(qq, {"node": starting_room, "path": []})
+    visited = set()
+
+    # While len(qq) > 0:
+        # current room is dequeue(qq)
+    
+        # check if current room[starting_room].id is not in visited
+            # If so, add current_room[starting_room].id to current_room[path]
+
+            # if the current_room["node"].id == target_room.id
+            # This means we've reached the next item in our stack on DFS and we're good to go for another iteration of DFS
+                # Add current_room[starting_room].id to current_room[path]
+                # return current_room[path]
+
+            # Otherwise, we should add all neighbouring nodes to the queue to go for another round of BFS
+            # for direction in current_room["node"].getExits():
+                # set currently_evaluated_room to current_room["node"].getRoomInDirection(direction)
+
+                # Create a copy of the path we took to get here
+                # path_copy = current_room["path"]
+                # path_copy.append(current_room["node"].id)
+
+                # Add new path to queue
+                # enqueue(qq, {"node": currently_evaluated_room, "path": path_copy)
+            
+
+
+
+
+
+        # else
+            # dequeue(qq)
+    # return None
+    
+    
+    
     pass
 
 
