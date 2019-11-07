@@ -74,73 +74,80 @@ def dft(player):
             # Sort the list from room with most exits to least. The one with the fewest exits should be visited first, so it will get added to the stack last.
             sorted_obj = sorted(
                 dict_with_no_none, key=lambda room: len(room[1].getExits()), reverse=True)
-            print("here")
-            print(sorted_obj)
+            # print("here")
+            # print(sorted_obj)
 
             # Check every room in sorted_obj to see if we've already visited it
+            for room in sorted_obj:
                 # If not, add it to stack
+                if room[1].id not in visited:
+                    stack.append(room[1])
 
             # Check if stack_size is larger than what it was in the beginning (stack_size_before)
             # If the lenghts are equal, we have not pushed any rooms to the stack, so we're at a dead end. Therefore, we should start BFT
             # If it's different, we should just reloop
+            if len(stack) == stack_size_before:
 
                 # declare shortest path list
-
-                # try
+                shortest_path = []
+                try:
                     # If the current room id is the same as the id of the next room on the stack, we're at risk of beginning a looped cycle. In that case, we should take the second item of the stack [-2].id as target for our bfs (if it exists)
                     # If there is no second item in the stack, we're done!
-                        # bfs(current_room, stack[-2])
+                    if current_room.id == stack[-1].id:
+                        shortest_path = bfs(current_room, stack[-2])
 
                     # Call BFS with current room and the last/uppermost item in the stack
                         # bfs(current_room, stack[-1])
+                    else:
+                        shortest_path = bfs(current_room, stack[-1])
 
                     # append paths traversed with BFS to visited list
                     # except the first and the last node
                     # as they are added to the traversed path with DFT (unvisited nodes at this point)
+                    for i in range(1, len(shortest_path)-1):
+                        visited.append(shortest_path[i])
                 
-                # except
-                    # Print that we're done
-    pass
+                except:
+                    print("done")
+    
+    return visited
 
 def bft(starting_room, target_room):
     qq = []
     enqueue(qq, {"node": starting_room, "path": []})
     visited = set()
 
-    # While len(qq) > 0:
+    while len(qq) > 0:
         # current room is dequeue(qq)
-    
+        current_room = dequeue(qq)
         # check if current room[starting_room].id is not in visited
+        if current_room[starting_room].id not in visited:
             # If so, add current_room[starting_room].id to current_room[path]
+            visited.add(current_room["node"].id)
 
-            # if the current_room["node"].id == target_room.id
+            if current_room["node"].id == target_room.id:
             # This means we've reached the next item in our stack on DFS and we're good to go for another iteration of DFS
                 # Add current_room[starting_room].id to current_room[path]
-                # return current_room[path]
+                current_room["path"].append(current_room["node"].id)
+                return current_room["path"]
 
             # Otherwise, we should add all neighbouring nodes to the queue to go for another round of BFS
-            # for direction in current_room["node"].getExits():
+            for direction in current_room["node"].getExits():
                 # set currently_evaluated_room to current_room["node"].getRoomInDirection(direction)
+                currently_evaluated_room = current_room["node"].getRoomInDirection(direction)
 
                 # Create a copy of the path we took to get here
-                # path_copy = current_room["path"]
-                # path_copy.append(current_room["node"].id)
+                path_copy = current_room["path"]
+                path_copy.append(current_room["node"].id)
 
                 # Add new path to queue
-                # enqueue(qq, {"node": currently_evaluated_room, "path": path_copy)
-            
+                enqueue(qq, {"node": currently_evaluated_room, "path": path_copy})
 
 
+        else:
+            dequeue(qq)
+    return None
 
-
-
-        # else
-            # dequeue(qq)
-    # return None
-    
-    
-    
-    pass
 
 
 
