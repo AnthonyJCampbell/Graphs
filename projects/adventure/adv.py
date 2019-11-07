@@ -48,28 +48,40 @@ def dft(player):
     stack.append(player.currentRoom)
 
     while len(stack) > 0:
-        # run DFT
         # Remove item from stack
+        current_room = stack.pop()
         # Evaluate if we've already visited current room
+        if current_room.id not in visited:
             # If not, add current_room to visited
+            visited.append(current_room.id)
 
             # Track stack size before evaluating rooms and exits
+            stack_size_before = len(stack)
 
             # Declare a neighbouring rooms dict, which we'll use to store the exits in the neighbouring rooms to evaluate possible dead-ends.
-            # neighbouring_rooms = {'n': None, 'w': None, 's': None, 'e': None}
+            neighbouring_rooms = {'n': None, 'w': None, 's': None, 'e': None}
 
-            # for room in current_room.getExits():
-                # room = current_room.getRoomInDirection(direction)
-                # neighbouring_rooms[direction] = room
+            for direction in current_room.getExits():
+                room = current_room.getRoomInDirection(direction)
+                neighbouring_rooms[direction] = room
 
-        # else reloop
-        pass
+            # print(neighbouring_rooms)
+
+            # Create a list that only contains the neighbouring rooms which have exits themselves. Any neighbours that do not have more exits are disregarded.
+            dict_with_no_none = [i for i in neighbouring_rooms.items() if i[1] != None]
+            # print(dict_with_no_none)
+
+            # Sort the list from room with most exits to least. The one with the fewest exits should be visited first, so it will get added to the stack last.
+            sorted_obj = sorted(
+                dict_with_no_none, key=lambda room: len(room[1].getExits()), reverse=True)
+            print("here")
+            print(sorted_obj)
+
     pass
 
 def bft():
     pass
 
-print(player.currentRoom.getRoomInDirection('n'))
 
 
 
