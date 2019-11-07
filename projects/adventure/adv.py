@@ -86,16 +86,25 @@ def dft(player):
 
                 # declare shortest path list
 
-                # Call BFS with current room and the last/uppermost item in the stack
+                # try
+                    # If the current room id is the same as the id of the next room on the stack, we're at risk of beginning a looped cycle. In that case, we should take the second item of the stack [-2].id as target for our bfs (if it exists)
+                    # If there is no second item in the stack, we're done!
+                        # bfs(current_room, stack[-2])
 
-                 # append paths traversed with BFS to visited list
-                # except the first and the last node
-                # as they are added to the traversed path with DFT (unvisited nodes at this point)
+                    # Call BFS with current room and the last/uppermost item in the stack
+                        # bfs(current_room, stack[-1])
+
+                    # append paths traversed with BFS to visited list
+                    # except the first and the last node
+                    # as they are added to the traversed path with DFT (unvisited nodes at this point)
+                
+                # except
+                    # Print that we're done
     pass
 
 def bft(starting_room, target_room):
     qq = []
-    qq.append
+    enqueue(qq, {"node": starting_room, "path": []})
     pass
 
 
@@ -113,12 +122,6 @@ def dequeue(queue):
         return queue.pop()
     return ("Queue empty!")
 
-
-queueue = ["john", "marina"]
-enqueue(queueue, "Mike")
-print(queueue)
-dequeue(queueue)
-print(queueue)
 
 
 traversalPath = dft(player)
