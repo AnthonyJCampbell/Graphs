@@ -3,6 +3,40 @@ from player import Player
 from world import World
 from room_storage import roomGraph1 as roomGraph
 
+class Queue():
+    def __init__(self):
+        self.queue = []
+
+    def enqueue(self, value):
+        self.queue.append(value)
+
+    def dequeue(self):
+        if self.size() > 0:
+            return self.queue.pop(0)
+        else:
+            return None
+
+    def size(self):
+        return len(self.queue)
+
+
+class Stack():
+    def __init__(self):
+        self.stack = []
+
+    def push(self, value):
+        self.stack.append(value)
+
+    def pop(self):
+        if self.size() > 0:
+            return self.stack.pop()
+        else:
+            return None
+
+    def size(self):
+        return len(self.stack)
+
+
 
 # Load world
 world = World()
@@ -174,10 +208,11 @@ print(f'path length: {len(traversalPath)}')
 
 
 
+
 # TRAVERSAL TEST
 visited_rooms = set()
-player.currentRoom = world.startingRoom
-visited_rooms.add(player.currentRoom)
+# player.currentRoom = world.startingRoom
+# visited_rooms.add(player.currentRoom)
 
 for move in traversalPath:
     player.travel(move)
