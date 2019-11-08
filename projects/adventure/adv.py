@@ -1,7 +1,7 @@
 from room import Room
 from player import Player
 from world import World
-from room_storage import roomGraph1 as roomGraph
+from room_storage import roomGraph5 as roomGraph
 
 class Queue():
     def __init__(self):
@@ -76,12 +76,14 @@ player = Player("Name", world.startingRoom)
 
 # >>> Create separate functions for DFT and BFT
 
+traversalPath = []
+
 def dft(player):
     visited = []
-    stack = []
-    stack.append(player.currentRoom)
+    stack = Stack()
+    stack.push(player.currentRoom)
 
-    while len(stack) > 0:
+    while stack.size() > 0:
         # Remove item from stack
         current_room = stack.pop()
         # Evaluate if we've already visited current room
@@ -90,7 +92,7 @@ def dft(player):
             visited.append(current_room.id)
 
             # Track stack size before evaluating rooms and exits
-            stack_size_before = len(stack)
+            stack_size_before = len(stack.stack)
 
             # Declare a neighbouring rooms dict, which we'll use to store the exits in the neighbouring rooms to evaluate possible dead-ends.
             neighbouring_rooms = {'n': None, 'w': None, 's': None, 'e': None}
@@ -115,25 +117,25 @@ def dft(player):
             for room in sorted_obj:
                 # If not, add it to stack
                 if room[1].id not in visited:
-                    stack.append(room[1])
+                    stack.push(room[1])
 
             # Check if stack_size is larger than what it was in the beginning (stack_size_before)
             # If the lenghts are equal, we have not pushed any rooms to the stack, so we're at a dead end. Therefore, we should start BFT
             # If it's different, we should just reloop
-            if len(stack) == stack_size_before:
+            if len(stack.stack) == stack_size_before:
 
                 # declare shortest path list
                 shortest_path = []
                 try:
                     # If the current room id is the same as the id of the next room on the stack, we're at risk of beginning a looped cycle. In that case, we should take the second item of the stack [-2].id as target for our bfs (if it exists)
                     # If there is no second item in the stack, we're done!
-                    if current_room.id == stack[-1].id:
-                        shortest_path = bfs(current_room, stack[-2])
+                    if current_room.id == stack.stack[-1].id:
+                        shortest_path = bft(current_room, stack.stack[-2])
 
                     # Call BFS with current room and the last/uppermost item in the stack
                         # bfs(current_room, stack[-1])
                     else:
-                        shortest_path = bfs(current_room, stack[-1])
+                        shortest_path = bft(current_room, stack.stack[-1])
 
                     # append paths traversed with BFS to visited list
                     # except the first and the last node
@@ -141,27 +143,26 @@ def dft(player):
                     for i in range(1, len(shortest_path)-1):
                         visited.append(shortest_path[i])
                 
-                except:
+                except IndexError:
                     print("done")
-    
     return visited
 
-def bft(starting_room, target_room):
-    qq = []
-    enqueue(qq, {"node": starting_room, "path": []})
-    visited = set()
+def bft(start, target_room):
+    qq = Queue()
+    qq.enqueue({"node": start, "path": []})
+    visited_set = set()
 
-    while len(qq) > 0:
+    while qq.size() > 0:
         # current room is dequeue(qq)
-        current_room = dequeue(qq)
-        # check if current room[starting_room].id is not in visited
-        if current_room[starting_room].id not in visited:
-            # If so, add current_room[starting_room].id to current_room[path]
-            visited.add(current_room["node"].id)
+        current_room = qq.queue[0]
+        # check if current room[start].id is not in visited
+        if current_room["node"].id not in visited_set:
+            # If so, add current_room[start].id to current_room[path]
+            visited_set.add(current_room["node"].id)
 
             if current_room["node"].id == target_room.id:
             # This means we've reached the next item in our stack on DFS and we're good to go for another iteration of DFS
-                # Add current_room[starting_room].id to current_room[path]
+                # Add current_room[start].id to current_room[path]
                 current_room["path"].append(current_room["node"].id)
                 return current_room["path"]
 
@@ -171,39 +172,23 @@ def bft(starting_room, target_room):
                 currently_evaluated_room = current_room["node"].getRoomInDirection(direction)
 
                 # Create a copy of the path we took to get here
-                path_copy = current_room["path"]
+                path_copy = current_room["path"].copy()
                 path_copy.append(current_room["node"].id)
 
                 # Add new path to queue
-                enqueue(qq, {"node": currently_evaluated_room, "path": path_copy})
+                qq.enqueue({"node": currently_evaluated_room, "path": path_copy})
 
-
-        else:
-            dequeue(qq)
+        
+        qq.dequeue()
     return None
 
-
-
-
-
-
-
-
-
-def enqueue(queue, data):
-    queue.insert(0, data)
-
-def dequeue(queue):
-    if len(queue)>0:
-        return queue.pop()
-    return ("Queue empty!")
 
 
 
 traversalPath = dft(player)
 
 print(f'path: {traversalPath}')
-print(f'path length: {len(traversalPath)}')
+# print(f'path length: {len(traversalPath)}')
 
 
 
@@ -214,9 +199,11 @@ visited_rooms = set()
 # player.currentRoom = world.startingRoom
 # visited_rooms.add(player.currentRoom)
 
+# print(traversalPath)
+
 for move in traversalPath:
-    player.travel(move)
-    visited_rooms.add(player.currentRoom)
+    # player.travel(move)
+    visited_rooms.add(move)
 
 if len(visited_rooms) == len(roomGraph):
     print(f"TESTS PASSED: {len(traversalPath)} moves, {len(visited_rooms)} rooms visited")
